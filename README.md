@@ -13,7 +13,7 @@
 
 Для изучения нужно развернуть MongoDB локально. Есть два способа:
 1. Установить MongoDB Community Edition. Скачать её можно [отсюда](https://www.mongodb.com/try/download/community).
-2. Развенуть локально Docker-образ MongoDB по [инструкции](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/).
+2. Развернуть локально Docker-образ MongoDB по [инструкции](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/).
 
 ## 1. Bson сериализация
 
