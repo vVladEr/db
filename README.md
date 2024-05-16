@@ -9,14 +9,11 @@
 Сейчас у этих интерфейсов есть реализации для хранения всех данных в памяти.
 Требуется создать новые реализации, для хранения данных в MongoDB. Ниже вся задача разбита на этапы:
 
-## 0. Создание облачного кластера
+## 0. Установка MongoDB
 
-Для изучения создай бесплатный кластер по ссылке https://www.mongodb.com/cloud/atlas/azure-mongodb.
-Выбирай план с free, хостинг можно выбрать любой.
-
-После создания кластера нажми на кнопку Connect и добавь свой IP-адрес в список разрешенных. Создай пользователя и запомни логин-пароль от него.
-
-Затем полученную connection string вставь в TestMongoDatabase в переменную mongoConnectionString.
+Для изучения нужно развернуть MongoDB локально. Есть два способа:
+1. Установить MongoDB Community Edition. Скачать её можно [отсюда](https://www.mongodb.com/try/download/community).
+2. Развернуть локально Docker-образ MongoDB по [инструкции](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/).
 
 ## 1. Bson сериализация
 
