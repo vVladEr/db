@@ -46,20 +46,19 @@ namespace Game.Domain
 
         public UserEntity GetOrCreateByLogin(string login)
         {
-            var update = Builders<UserEntity>.Update.SetOnInsert(u => u.Id, Guid.NewGuid())
-                .SetOnInsert(u => u.Login, login);
-
-            var options = new FindOneAndUpdateOptions<UserEntity>
+            var user = userCollection.Find(u => u.Login == login, new FindOptions
             {
-                IsUpsert = true,
-                ReturnDocument = ReturnDocument.After
-            };
+                Hint = "login_index"
+            }).FirstOrDefault();
 
-            var user = userCollection.FindOneAndUpdate<UserEntity>(
-                u => u.Login == login, update, options
-            );
+            if (user != null) return user;
+            user = new UserEntity(Guid.NewGuid()) { Login = login };
+            userCollection.InsertOne(user);
+
             return user;
         }
+
+
 
 
         public void Update(UserEntity user)
