@@ -46,21 +46,21 @@ namespace Game.Domain
 
         public UserEntity GetOrCreateByLogin(string login)
         {
-            var user = userCollection.Find(u => u.Login == login, new FindOptions
+            lock (userCollection)
             {
-                Hint = "login_index"
-            }).FirstOrDefault();
+                var user = userCollection.Find(u => u.Login == login, new FindOptions
+                {
+                    Hint = "login_index"
+                }).FirstOrDefault();
 
-            if (user != null) return user;
-            user = new UserEntity(Guid.NewGuid()) { Login = login };
-            userCollection.InsertOne(user);
+                if (user != null) return user;
+                user = new UserEntity(Guid.NewGuid()) { Login = login };
+                userCollection.InsertOne(user);
 
-            return user;
+                return user;
+            }
         }
-
-
-
-
+        
         public void Update(UserEntity user)
         {
             //TODO: Ищи в документации ReplaceXXX

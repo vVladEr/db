@@ -13,18 +13,17 @@ namespace ConsoleApp
 
         private Program(string[] args)
         {
-            userRepo = CreateUserRepository();
-            gameRepo = new InMemoryGameRepository();
+            var db = CreateMongoDb();
+            userRepo = db.GetUserRepository();
+            gameRepo = db.GetGameRepository();
         }
-
-        private static MongoUserRepository CreateUserRepository()
+        
+        private static IMongoDatabase CreateMongoDb()
         {
             var mongoConnectionString = Environment.GetEnvironmentVariable("PROJECT5100_MONGO_CONNECTION_STRING")
                                         ?? "mongodb://localhost:27017?maxConnecting=100";
             var mongoClient = new MongoClient(mongoConnectionString);
-            var db = mongoClient.GetDatabase("game-tests");
-            db.DropCollection(MongoUserRepository.CollectionName);
-            return new MongoUserRepository(db);
+            return mongoClient.GetDatabase("game-tests");
         }
 
         public static void Main(string[] args)
