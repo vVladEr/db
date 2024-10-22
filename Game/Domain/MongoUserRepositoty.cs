@@ -46,19 +46,21 @@ namespace Game.Domain
 
         public UserEntity GetOrCreateByLogin(string login)
         {
-            //TODO: Это Find или Insert
-            lock (userCollection)
-            {
-                var user = userCollection.Find(u => u.Login == login).FirstOrDefault();
-                if (user == null)
-                {
-                    user = new UserEntity(Guid.NewGuid()) { Login = login };
-                    Insert(user);
-                }
-                return user;
-            }
+            var update = Builders<UserEntity>.Update.SetOnInsert(u => u.Id, Guid.NewGuid())
+                .SetOnInsert(u => u.Login, login);
 
+            var options = new FindOneAndUpdateOptions<UserEntity>
+            {
+                IsUpsert = true,
+                ReturnDocument = ReturnDocument.After
+            };
+
+            var user = userCollection.FindOneAndUpdate<UserEntity>(
+                u => u.Login == login, update, options
+            );
+            return user;
         }
+
 
         public void Update(UserEntity user)
         {
