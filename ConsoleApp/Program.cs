@@ -23,7 +23,7 @@ namespace ConsoleApp
             var mongoConnectionString = Environment.GetEnvironmentVariable("PROJECT5100_MONGO_CONNECTION_STRING")
                                         ?? "mongodb://localhost:27017?maxConnecting=100";
             var mongoClient = new MongoClient(mongoConnectionString);
-            return mongoClient.GetDatabase("game-tests");
+            return mongoClient.GetDatabase("game");
         }
 
         public static void Main(string[] args)
@@ -86,6 +86,7 @@ namespace ConsoleApp
 
             user.CurrentGameId = game.Id;
             userRepo.Update(user);
+            gameRepo.Update(game);
 
             return true;
         }

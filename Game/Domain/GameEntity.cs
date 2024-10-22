@@ -34,6 +34,7 @@ namespace Game.Domain
             private set;
         }
 
+        [BsonElement]
         public IReadOnlyList<Player> Players => players.AsReadOnly();
 
         [BsonElement]
